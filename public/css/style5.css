@@ -61,6 +61,11 @@ html{
   border-bottom: .2rem solid rgb(37,26,53);
   height: 60rem;
 } */
+
+nav a {
+  text-decoration: none;
+}
+
 /******************************************
 /* LAYOUT
 /*******************************************/
@@ -101,13 +106,14 @@ footer {
   height: 2rem;
 }
 
+
 /******************************************
 /* ADDITIONAL STYLES Log In Section
 /*******************************************/
 #video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 300px);
-  grid-auto-rows: 300px;
+  grid-template-columns: repeat(auto-fill, 60rem);
+  grid-auto-rows: 60rem;
 }
 
 video {

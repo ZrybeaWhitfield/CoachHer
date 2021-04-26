@@ -46,6 +46,51 @@
             <% } %>
             </ul>
       </section>
+
+      <section class="filters">
+
+        <form action="/coach" method="post">
+          <p class="filterCats">Division</p>
+            <input type="checkbox" name="division1" value="Bikini">
+            <label for="division">Bikini</label>
+
+            <input type="checkbox" name="division2" value="Wellness">
+            <label for="division">Wellness</label>
+
+
+            <input type="checkbox" name="division3" value="Figure">
+            <label for="division">Figure</label>
+
+
+            <input type="checkbox" name="division4" value="Fitness">
+            <label for="division">Fitness</label>
+
+            <input type="checkbox" name="division5" value="WPD">
+            <label for="division">Women's Physique Division</label>
+
+            <input type="checkbox" name="division6" value="WBB">
+            <label for="division">Women's Bodybuilding</label>
+
+          <p class="filterCats">Coach Gender</p>
+          <input type="radio" name="gender" value="Female">
+          <label for="division">Female</label>
+
+          <input type="radio" name="gender" value="Male">
+          <label for="division">Male</label>
+
+          <p class="filterCats">External Links</p>
+          <input type="text" placeholder="Website" name="website" value="">
+          <input type="text" placeholder="Instagram" name="instagram" value="">
+          <input type="text" placeholder="Facebook" name="facebook" value="">
+
+          <label for="about">About Coach</label>
+          <textarea name="about" rows="8" cols="80"></textarea>
+
+          <button type="submit" class="btn btn-warning btn-lg">Submit</button>
+        </form>
+
+
+      </section>
     </section>
 
 

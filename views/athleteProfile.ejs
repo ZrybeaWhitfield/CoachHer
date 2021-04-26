@@ -58,6 +58,7 @@
                   <span><%= coaches[i].local.firstname %></span> <span><%= coaches[i].local.lastname %></span>
                   <input type="hidden" name="coachID" value="<%= coaches[i]._id %>"><button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
                   <a href="/room/:room">Chat with <%=coaches[i].local.lastname %></a>
+                  <!-- manually add in coachID and UserID for room? -->
                   <!-- use  array find to search through the request arrays with any of the coaches-->
                 </form>
 

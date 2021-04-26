@@ -67,17 +67,23 @@ var upload = multer({storage: storage});
     })
   });
 
-
+//get help with filtering coaches
   app.get('/browsecoaches', function(req, res) {
 
       db.collection('users').find({"local.profiletype" : "coach"}).toArray((err, coachResults) => {
         if (err) return console.log(err)
-        res.render('browseCoaches.ejs', {
-          user : req.user,
-          coaches: coachResults
+        // db.collection('coach').find({"local.division[]" : "coach"}).toArray((err, divisionResults) => {
+        //   if (err) return console.log(err)
+        //   console.log(division);
+          res.render('browseCoaches.ejs', {
+            user : req.user,
+            coaches: coachResults
+
+          })
         })
-      })
-    });
+
+      });
+      // });
 
 
 
@@ -124,6 +130,20 @@ var upload = multer({storage: storage});
   //   })
   // })
 
+  app.post('/coach', (req, res) => { //posting the message request to the DB
+    let divisions = [req.body.division1, req.body.division2,  req.body.division3, req.body.division4, req.body.division5, req.body.division6]
+    divisions = divisions.filter(element => typeof element === "string")
+    divisions.forEach((element) => {
+      db.collection('coach').findOneAndUpdate({website: req.body.website, instagram: req.body.instagram, facebook: req.body.facebook, about: req.body.about, gender: req.body.gender},{$push: {division: element}}, {"upsert": true}, (err, result) => {// goes into collections and adds the data to these properties
+        if (err) return console.log(err)//returns err if response is no good
+        console.log('saved to database')
+        // refresh profile page to render the updated information
+      })
+    })
+    res.redirect('/coachprofile')
+
+  })
+
 
 // Chat Requests ===============================================================
   app.post('/chatRequest', (req, res) => { //posting the message request to the DB
@@ -165,6 +185,7 @@ var upload = multer({storage: storage});
       })
     })
 
+//get help with replacing :room with actual ID
     app.get('/room/:room', (req,res) => {
 
       db.collection('chatRequest').find({"status" : "Approved" }).toArray((err, result) => {//go to collection, find specific one, place in array
