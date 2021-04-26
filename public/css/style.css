@@ -1,0 +1,191 @@
+/*
+Project Name: CoachHer
+Author: Zrybea Whitfield
+Developer @Resilient Coders
+*/
+
+
+/******************************************
+/* SETUP
+/*******************************************/
+
+
+
+/* Box Model Hack */
+* {
+     -moz-box-sizing: border-box; /* Firexfox */
+     -webkit-box-sizing: border-box; /* Safari/Chrome/iOS/Android */
+     box-sizing: border-box; /* IE */
+}
+
+/* Clear fix hack */
+.clearfix:after {
+     content: ".";
+     display: block;
+     clear: both;
+     visibility: hidden;
+     line-height: 0;
+     height: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+.alignright {
+	float: right;
+	padding: 0 0 10px 10px; /* note the padding around a right floated image */
+}
+
+.alignleft {
+	float: left;
+	padding: 0 10px 10px 0; /* note the padding around a left floated image */
+}
+
+/******************************************
+/* BASE STYLES
+/*******************************************/
+/* color rgb(234,227,245) - lilac
+        rgb(97,56,185) - purple
+        rgb(219,144,234) - pink
+        rgb(37,26,53) - plum
+        */
+html{
+  font-size: 62.5%;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+a:hover{
+  color: rgb(219,144,234);
+}
+
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+.directory{
+  display: grid;
+  font-size: 1.5rem;
+  grid-template-columns: 40% 60%;
+  height: 60rem;
+}
+p{
+  font-weight: 300;
+  margin-left: 2rem;
+}
+/******************************************
+/* ADDITIONAL STYLES Header/Footer
+/*******************************************/
+header{
+  background: url(../img/cover.png), rgb(234,227,245);
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-bottom:.2rem solid rgb(37,26,53);
+  height: 10rem;
+}
+
+ul{
+  display: grid;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 700;
+  grid-template-columns: 25% 25% 25% 25%;
+  padding-top: 4rem;
+  margin-left: 50%;
+  width:50%;
+}
+footer {
+  background: rgb(234,227,245);
+  border-top: .2rem solid rgb(37,26,53);
+  height: 2rem;
+}
+
+.copy {
+  margin-top: .5rem;
+}
+
+.navLinks{
+  text-decoration: none;
+}
+
+
+/******************************************
+/* ADDITIONAL STYLES Log In Section
+/*******************************************/
+h2{
+  font-size: 5rem;
+  font-weight: 700;
+  font-style: italic;
+  margin-top: 10%;
+  text-align: center;
+}
+
+.go {
+  background: rgb(97,56,185);
+  border-radius: 1rem;
+  color: rgb(250,250,250);
+  display: block;
+  font-size: 2rem;
+  margin: 4rem auto;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  width: 20%;
+}
+/******************************************
+/* ADDITIONAL STYLES Intro Section
+/*******************************************/
+
+.intro {
+  background: linear-gradient(135deg, rgb(97,56,185) 15%, rgb(219,144,234));
+  border-left:.2rem solid rgb(37,26,53);
+  color: white;
+  /* min-height: 100vh; */
+}
+
+.introSection{
+  border: 2px solid green;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.introLinks{
+  border: .1rem solid rgb(250, 250, 250);
+  border-radius: 2rem;
+  color: rgb(250, 250, 250);
+  display: block;
+  font-size: 3rem;
+  margin: 10rem auto;
+  padding: 2rem;
+  text-align: center;
+  text-decoration: none;
+  width: 50%;
+}
+
+.introLinks:hover{
+  background:rgb(219,144,234);
+  border: rgb(219,144,234);
+  color: rgb(250, 250, 250);
+}
+/******************************************
+/* ADDITIONAL STYLES About Section
+/*******************************************/
+h1 {
+  font-size: 5rem;
+  margin-top: 10rem;
+  text-align: center;
+}
+.aboutPic{
+  background-image: url(../img/competitors.jpeg);
+  background-size: cover;
+  border-top: .2rem solid rgb(37,26,53);
+  border-bottom: .2rem solid rgb(37,26,53);
+  height: 60rem;
+}
+
+.about{
+  font-size: 2.5rem;
+  margin: 5rem auto;
+  text-align: center;
+  width: 70%;
+}
