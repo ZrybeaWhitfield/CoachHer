@@ -25,24 +25,36 @@
   <main>
     <!-- profile pic goes here -->
     <section class="profilePic">
-      <h1>Dashboard</h1>
-      <form action="/profilePic" method="POST" enctype="multipart/form-data">
-        <input class="postImage" type="file" name="file-to-upload" placeholder="Upload Image" multiple>
-        <button type="submit">Add Photo</button>
-      </form>
+      <h1><%= user.local.username%>'s Dashboard</h1>
+      <img src="<%= user.local.imagepath %>" alt="">
+
+
     </section>
 
     <section class="roster">
       <section>
         <ul>
-            <% for(var i=0; i< chatRequests.length; i++) {%>
+            <% for(var i=0; i< chatRequests.length; i++) {
+              console.log(chatRequests[i])
+              if(chatRequests[i].status !== "Declined"){ %>
+
               <li data-id='<%= chatRequests[i]._id %>'>
-                <span><%= chatRequests[i].athleteUN %></span> <a href="/chatRequest?coachID=<%= chatRequests[i]._id %>"><button type="button" name="button">Chat with <%= chatRequests[i].athleteUN %></button></a>
-                <span><%= chatRequests[i].status %></span><button class="accept" type="button" name="button">Accept</button><button class="decline" type="button" name="button">Decline</button>
+                <% if(chatRequests[i].status == "Approved"){ %>
+                <span>Chat with <%= chatRequests[i].athleteUN %></span>
+                <a href="/room/<%= chatRequests[i].roomID %>">Join Chat</a>
+                <% } else { %>
+                <span>You have a chat request pending</span>
+                <button class="accept" type="button" name="button">Accept</button><button class="decline" type="button" name="button">Decline</button>
+
+                <% } %>
+
+
+
 
                   <!-- use  array find to search through the request arrays with any of the coaches-->
                 </form>
               </li>
+              <% } %>
             <% } %>
             </ul>
       </section>
@@ -51,24 +63,24 @@
 
         <form action="/coach" method="post">
           <p class="filterCats">Division</p>
-            <input type="checkbox" name="division1" value="Bikini">
+            <input type="checkbox" name="division" value="Bikini">
             <label for="division">Bikini</label>
 
-            <input type="checkbox" name="division2" value="Wellness">
+            <input type="checkbox" name="division" value="Wellness">
             <label for="division">Wellness</label>
 
 
-            <input type="checkbox" name="division3" value="Figure">
+            <input type="checkbox" name="division" value="Figure">
             <label for="division">Figure</label>
 
 
-            <input type="checkbox" name="division4" value="Fitness">
+            <input type="checkbox" name="division" value="Fitness" <%= user.local.coachInfo.division.includes("Fitness") ? "checked": "x" %>>
             <label for="division">Fitness</label>
 
-            <input type="checkbox" name="division5" value="WPD">
+            <input type="checkbox" name="division" value="WPD">
             <label for="division">Women's Physique Division</label>
 
-            <input type="checkbox" name="division6" value="WBB">
+            <input type="checkbox" name="division" value="WBB">
             <label for="division">Women's Bodybuilding</label>
 
           <p class="filterCats">Coach Gender</p>
@@ -84,7 +96,7 @@
           <input type="text" placeholder="Facebook" name="facebook" value="">
 
           <label for="about">About Coach</label>
-          <textarea name="about" rows="8" cols="80"></textarea>
+          <textarea name="about" rows="8" cols="80"><%= user.local.coachInfo.about ? user.local.coachInfo.about : "" %></textarea>
 
           <button type="submit" class="btn btn-warning btn-lg">Submit</button>
         </form>

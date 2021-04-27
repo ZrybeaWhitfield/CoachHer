@@ -26,14 +26,7 @@
     <!-- profile pic goes here -->
     <section class="profilePic">
       <h1><%= user.local.username%>'s Profile</h1>
-    <!-- <img src="" alt="">
-      <% if (user.local.email) { %>
-      <form action="/profilePic" method="POST" enctype="multipart/form-data">
-        <input class="postImage" type="file" name="file-to-upload" placeholder="Upload Image">
-        <button type="submit">Add Photo</button>
-      </form>
-      <% } %>
- -->
+
 
 
     </section>
@@ -52,12 +45,23 @@
         <h2>Chat with a Coach</h2>
         <ul>
             <% for(var i=0; i<coaches.length; i++) {%>
-              <li class="message">
+              <li class="" >
                 <!-- <span><%= coaches[i].local.username %></span> <a href="/chatRequest?coachID=<%= coaches[i]._id %>"><button type="button" name="button">Chat with <%= coaches[i].local.username %></button></a> -->
                 <form class="" action="/chatRequest" method="post">
                   <span><%= coaches[i].local.firstname %></span> <span><%= coaches[i].local.lastname %></span>
-                  <input type="hidden" name="coachID" value="<%= coaches[i]._id %>"><button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
-                  <a href="/room/:room">Chat with <%=coaches[i].local.lastname %></a>
+                  <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
+                  <% let request = chatRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
+                  console.log("looking for request for this coach", coaches[i]._id, request  )
+                  if(!request ){ %>
+                  <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
+                <% } else if(request.status == "Approved") { %>
+                  <a href="/room/<%= request.roomID %>">Chat with <%=coaches[i].local.lastname %></a>
+                <% } else if(request.status == "pending"){ %>
+                  <span>Your chat request is pending</span>
+
+                  <% } else { %>
+                    <span>Coach has declined Your Request</span>
+                    <% } %>
                   <!-- manually add in coachID and UserID for room? -->
                   <!-- use  array find to search through the request arrays with any of the coaches-->
                 </form>
@@ -65,6 +69,7 @@
               </li>
             <% } %>
             </ul>
+
       </section>
     </section>
 <!-- Browse coaches section -->

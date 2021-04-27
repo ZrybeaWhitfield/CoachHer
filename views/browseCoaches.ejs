@@ -32,47 +32,49 @@
         <section class="filter">
           <h2>Filter Coaches</h2>
           <section class="filterSecs">
-            <form class="" action="" method="post">
+            <form class="" action="/browsecoaches" method="post">
               <p class="filterCats">Division</p>
-                <input type="radio" name="division" value="">
+                <input type="radio" name="division" value="Bikini">
                 <label for="division">Bikini</label>
 
-                <input type="radio" name="division" value="">
+                <input type="radio" name="division" value="Wellness">
                 <label for="division">Wellness</label>
 
 
-                <input type="radio" name="division" value="">
+                <input type="radio" name="division" value="Figure">
                 <label for="division">Figure</label>
 
 
-                <input type="radio" name="division" value="">
+                <input type="radio" name="division" value="Fitness">
                 <label for="division">Fitness</label>
 
-                <input type="radio" name="division" value="">
+                <input type="radio" name="division" value="WPD">
                 <label for="division">Women's Physique Division</label>
 
-                <input type="radio" name="division" value="">
+                <input type="radio" name="division" value="WBB">
                 <label for="division">Women's Bodybuilding</label>
+
+                <button class="submit" type="buttom" name="button">Submit</button>
 
             </form>
 
             <form class="" action="index.html" method="post">
               <p class="filterCats">Coach Gender Preference</p>
               <input type="radio" name="gender" value="">
-              <label for="division">Female</label>
+              <label for="gender">Female</label>
 
               <input type="radio" name="gender" value="">
-              <label for="division">Male</label>
+              <label for="gender">Male</label>
 
 
               <input type="radio" name="gender" value="">
-              <label for="division">None</label>
+              <label for="gender">None</label>
 
 
             </form>
 
             <section class="submit" action="/browsecoaches" method="post">
-						<button class="submit" type="buttom" name="button">Submit</button>
+
 						<button class="clear" type="button" name="button">Clear</button>
 					</section>
           </section>
@@ -91,6 +93,8 @@
                   <p class="coachName"><%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></p class="coachName">
 
                   <a href="mailto:<%=coaches[i].local.email%>">📧 <%= coaches[i].local.email %></a>
+
+                  <img src="<%=coaches[i].local.imagepath%>" alt="">
                 </li>
               <% } %>
               </ul>

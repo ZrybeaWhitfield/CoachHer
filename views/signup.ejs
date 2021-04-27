@@ -31,7 +31,7 @@
     <% } %>
 
     <!-- LOGIN FORM -->
-    <form action="/signup" method="post">
+    <form action="/signup" method="post" enctype="multipart/form-data">
       <div class="form-group">
           <label>Username</label>
           <input type="text" class="form-control" name="username">
@@ -59,6 +59,10 @@
           <input type="radio" name="profiletype" value="athlete">
           <label for="athlete">Athlete</label>
         </div>
+
+          <label for="imagepath">Profile Picture</label>
+          <input class="postImage" type="file" name="imagepath" placeholder="Upload Image">
+
 
         <button type="submit" class="btn btn-warning btn-lg">Signup</button>
     </form>

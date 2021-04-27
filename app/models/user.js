@@ -12,7 +12,15 @@ var userSchema = mongoose.Schema({
         profiletype  : String,
         firstname    : String,
         lastname     : String,
-        imagepath    : String
+        imagepath    : String,
+        coachInfo    : {
+          website: String,
+          instagram: String,
+          facebook: String,
+          about: String,
+          gender: String,
+          division: [String]
+        }
     },
     facebook         : {
         id           : String,
