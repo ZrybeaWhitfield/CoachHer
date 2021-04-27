@@ -29,7 +29,7 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
 
       db.collection('users').find({"local.profiletype" : "coach"}).toArray((err, coachResults) => {
         if (err) return console.log(err)
-        res.render('athleteprofile.ejs', {
+        res.render('athleteProfile.ejs', {
           user : req.user,
           chatRequests : chatReqResults,
           coaches: coachResults
@@ -48,7 +48,7 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
         console.log();
         db.collection('users').find({"local.profiletype" : "coach"}).toArray((err, coachResults) => {
           if (err) return console.log(err)
-          res.render('coachdash.ejs', {
+          res.render('coachDash.ejs', {
             user : req.user,
             chatRequests : chatResults,
             coaches: coachResults
