@@ -23,24 +23,29 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
 
 
   app.get('/athleteprofile', isLoggedIn, function(req, res) {
-    db.collection('chatRequest').find({athleteID: ObjectId(req.user._id)}).toArray((err, chatReqResults) => {//go to collection, find specific one, place in array
-      console.log("chat request results", chatReqResults);
-      if (err) return console.log(err)// if the response is an err
+    db.collection('connectionRequest').find({athleteID: ObjectId(req.user._id)}).toArray((err, connectionResults) => {
+      db.collection('chatRequest').find({athleteID: ObjectId(req.user._id)}).toArray((err, chatReqResults) => {//go to collection, find specific one, place in array
+        console.log("chat request results", chatReqResults);
+        if (err) return console.log(err)// if the response is an err
 
-      db.collection('users').find({"local.profiletype" : "coach"}).toArray((err, coachResults) => {
-        if (err) return console.log(err)
-        res.render('athleteProfile.ejs', {
-          user : req.user,
-          chatRequests : chatReqResults,
-          coaches: coachResults
+        db.collection('users').find({"local.profiletype" : "coach"}).toArray((err, coachResults) => {
+          if (err) return console.log(err)
+          res.render('athleteProfile.ejs', {
+            user : req.user,
+            chatRequests : chatReqResults,
+            coaches: coachResults,
+            connectReqs : connectionResults
+          })
         })
       })
     })
   });
 
+
+
   app.get('/coachprofile', isLoggedIn, function(req, res) {
 
-    db.collection('connectionRequest').find({coachID: ObjectId(req.user._id)}).toArray((err, connectionResults) => {
+
       console.log("This is connection results", connectionResults);
       db.collection('chatRequest').find({coachID: ObjectId(req.user._id)}).toArray((err,
         chatResults) => {//go to collection, find specific one, place in array
@@ -54,12 +59,10 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
               res.render('coachDash.ejs', {
                 user : req.user,
                 chatRequests : chatResults,
-                coaches: coachResults,
-                connectionRequests: connectionResults
+                coaches: coachResults
               })
             })
           })
-        })
       })
 
 
@@ -71,42 +74,27 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
             "$in": [req.body.division]
           }
         }
+        // console.log(ObjectId(req.body.coachID), ObjectId(req.user._id),req.user.local.username);
 
-        console.log("This is the browse coaches filter", filter, req.body);
-
-        db.collection('users').find(filter).toArray((err, coachResults) => {
+        db.collection('users').find({$and:[
+          filter,
+          {connectedUsers: {$nin: [ObjectId(req.user._id)]}}
+        ]} ).toArray((err, coachResults) => {
           if (err) return console.log(err)
-
-
-          // console.log();
+          // console.log("this is conReqs", conReqResults);
+          // console.log(coachResults);
           res.render('browseCoaches.ejs', {
             user : req.user,
             coaches: coachResults
 
           })
 
-
-        })
+        })//This only renders if an athlete is logged in. Need help setting up a conditional request. Want this page to be public.
       }
-      //get help with filtering coaches
+
       app.post('/browsecoaches', browsecoaches);
 
       app.get('/browsecoaches', browsecoaches);
-
-      // get help with image
-      // app.get('/post/:postID', isLoggedIn, function(req, res) {//get request that takes in location, 2 functions as arguments
-      //   const param = req.params.postID
-      //   console.log(param);
-      //   db.collection('profilePic').find({_id: ObjectId(param)}).toArray((err, result) => {//go to collection, find specific one, place in array
-      //
-      //     if (err) return console.log(err)// if the response is an err
-      //     console.log(result);
-      //     res.render('athleteprofile.ejs', {//if response is good render the profile page
-      //       user : req.user, //results from the collection
-      //       messages: result
-      //     })
-      //   })
-      // });
 
 
 
@@ -116,19 +104,6 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
         res.redirect('/');//response is to redirect to root route
       });
 
-      // Picture DB ===============================================================
-
-
-
-
-
-      // app.post('/messages', (req, res) => { //posting the message request to the DB
-      //   db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {// goes into collections and adds the data to these properties
-      //     if (err) return console.log(err)//returns err if response is no good
-      //     console.log('saved to database')
-      //     res.redirect('/profile')// refresh profile page to render the updated information
-      //   })
-      // })
 
       // Coach details DB ===============================================================
       app.post('/coach', (req, res) => { //posting the message request to the DB
@@ -148,6 +123,7 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
                 about: req.body.about,
                 gender: req.body.gender,
                 division: req.body.division
+
               }
             }
           }, {"upsert": true}, (err, result) => {// goes into collections and adds the data to these properties
@@ -261,156 +237,131 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
           // Connection Requests ===============================================================
 
           app.post('/connectionRequest', (req, res) => { //posting the message request to the DB
-            console.log("coach info", req.body);
-            console.log("currentAthlete", req.user._id);
-            db.collection('connectionRequest').save({coachID: ObjectId(req.body.coachID), athleteID: req.user._id, athleteUN: req.user.local.username, status: "pending"}, (err, result) => {// goes into collections and adds the data to these properties
-              if (err) return console.log(err)//returns err if response is no good
-              console.log('saved to database')
-              res.redirect('/browsecoaches')// refresh profile page to render the updated information
+            // console.log("coach info", req.body);
+            // console.log("currentAthlete", req.user._id);
+            console.log("works",ObjectId(req.body.coachID) );
+            db.collection('users').findOneAndUpdate(
+              {"_id": ObjectId(req.body.coachID)},
+              {$push:{connectedUsers: ObjectId(req.user._id)}}
+              , (err, result) => {// goes into collections and adds the data to these properties
+                if (err) return console.log(err)//returns err if response is no good
+                console.log('saved to database')
+                res.redirect('/browsecoaches')// refresh profile page to render the updated information
+              })
             })
-          })
 
-          app.put('/acceptedConnection', (req, res) => {// request to update inforamtion on the page
-            db.collection('connectionRequest')
-            .findOneAndUpdate({_id: ObjectId(req.body.requestId)}, {//find the properties and updating
-              $set: {//changing whaterver property
-                status: "Approved"
-              }
-            }, {
-              sort: {_id: -1},//ordering the response in descending order
-              upsert: true//create the object if no object/document present
-            }, (err, result) => {//respond with error
-              if (err) return res.send(err)
-              res.send(result)
+            app.put('/acceptedConnection', (req, res) => {// request to update inforamtion on the page
+              db.collection('connectionRequest')
+              .findOneAndUpdate({_id: ObjectId(req.body.requestId)}, {//find the properties and updating
+                $set: {//changing whaterver property
+                  status: "Approved"
+                }
+              }, {
+                sort: {_id: -1},//ordering the response in descending order
+                upsert: true//create the object if no object/document present
+              }, (err, result) => {//respond with error
+                if (err) return res.send(err)
+                res.send(result)
+              })
             })
-          })
-          app.put('/declinedConnection', (req, res) => {// request to update inforamtion on the page
-            db.collection('connectionRequest')// go into db collection
-            .findOneAndUpdate({_id: ObjectId(req.body.requestId)}, {//find the properties and updating
-              $set: {//changing whaterver property
-                status: "Declined"//from the request data go to thumbup value and adding 1
-              }
-            }, {
-              sort: {_id: -1},//ordering the response in descending order
-              upsert: true//create the object if no object/document present
-            }, (err, result) => {//respond with error
-              if (err) return res.send(err)
-              res.send(result)
+            app.put('/declinedConnection', (req, res) => {// request to update inforamtion on the page
+              db.collection('connectionRequest')// go into db collection
+              .findOneAndUpdate({_id: ObjectId(req.body.requestId)}, {//find the properties and updating
+                $set: {//changing whaterver property
+                  status: "Declined"//from the request data go to thumbup value and adding 1
+                }
+              }, {
+                sort: {_id: -1},//ordering the response in descending order
+                upsert: true//create the object if no object/document present
+              }, (err, result) => {//respond with error
+                if (err) return res.send(err)
+                res.send(result)
+              })
             })
-          })
 
 
-          //=============================================================================
-          // AUTHENTICATE (FIRST LOGIN) ==================================================
-          // =============================================================================
+            //=============================================================================
+            // AUTHENTICATE (FIRST LOGIN) ==================================================
+            // =============================================================================
 
-          // locally --------------------------------
-          // LOGIN ===============================
-          // show the login form
-          app.get('/login', function(req, res) {//get request to login path
-            res.render('login.ejs', { message: req.flash('loginMessage') });//rendering page
-          });
-
-          // process the login form
-          app.post('/login', passport.authenticate('local-login', {
-            // successRedirect : '/feed', // redirect to the secure profile section
-            failureRedirect : '/login', // redirect back to the signup page if there is an error
-            failureFlash : true // allow flash messages
-          }), (req, res) => {// request to update inforamtion on the page
-            console.log(req.user);
-            // req.user.local.profiletype = req.body.profiletype
-            // req.user.local.username = req.body.username
-
-            if(req.user.local.profiletype == "coach"){
-              res.redirect("/coachprofile")
-            }else{
-              res.redirect("/athleteprofile")
-            }
-
-          });
-
-          // SIGNUP =================================
-          // show the signup form
-          app.get('/signup', function(req, res) {
-            res.render('signup.ejs', { message: req.flash('signupMessage') });
-          });
-
-          // process the signup form
-
-          // app.post('/signup', passport.authenticate('local-signup', {
-          //   // successRedirect : '/feed', // redirect to the secure profile section
-          //   failureRedirect : '/signup', // redirect back to the signup page if there is an error
-          //   failureFlash : true // allow flash messages
-          // }), (req, res) => {// request to update inforamtion on the page
-          //   console.log(req.body);
-          //
-          //   req.user.local.profiletype = req.body.profiletype
-          //   req.user.local.username = req.body.username
-          //   req.user.local.firstname = req.body.firstname
-          //   req.user.local.lastname = req.body.lastname
-          //   //req.file.filename (once you have the image up and running)
-          //   req.user.save()
-          //   if(req.body.profiletype == "coach"){
-          //     res.redirect("/coachprofile")
-          //   }else{
-          //     res.redirect("/athleteprofile")
-          //   }
-          //
-          // }); // this is how I can add properties to user
-
-          // app.post('/profilepic', upload.single('file-to-upload'), (req, res, next) => {
-          //   let uId = ObjectId(req.session.passport.user)
-          //   db.collection('profilePic').save({posterId: uId, imgPath: 'images/uploads/' + req.file.filename}, (err, result) => {
-          //     if (err) return console.log(err)
-          //     console.log('saved to database')
-          //     res.redirect('/athleteprofile')
-          //   })
-          // });
-          app.post('/signup', upload.single('imagepath'), passport.authenticate('local-signup', {
-            // successRedirect : '/feed', // redirect to the secure profile section
-            failureRedirect : '/signup', // redirect back to the signup page if there is an error
-            failureFlash : true // allow flash messages
-          }),  (req, res) => {// request to update inforamtion on the page
-            console.log(req.body);
-
-            req.user.local.profiletype = req.body.profiletype
-            req.user.local.username = req.body.username
-            req.user.local.firstname = req.body.firstname
-            req.user.local.lastname = req.body.lastname
-            req.user.local.imagepath = 'images/uploads/' + req.file.filename
-            console.log(req.user.local)
-            req.user.save()
-            if(req.body.profiletype == "coach"){
-              res.redirect("/coachprofile")
-            }else{
-              res.redirect("/athleteprofile")
-            }
-
-          });
-
-          // =============================================================================
-          // UNLINK ACCOUNTS =============================================================
-          // =============================================================================
-          // used to unlink accounts. for social accounts, just remove the token
-          // for local account, remove email and password
-          // user account will stay active in case they want to reconnect in the future
-
-          // local -----------------------------------
-          app.get('/unlink/local', isLoggedIn, function(req, res) {
-            var user            = req.user;
-            user.local.email    = undefined;
-            user.local.password = undefined;
-            user.save(function(err) {
-              res.redirect('/feed');
+            // locally --------------------------------
+            // LOGIN ===============================
+            // show the login form
+            app.get('/login', function(req, res) {//get request to login path
+              res.render('login.ejs', { message: req.flash('loginMessage') });//rendering page
             });
-          });
 
-        };
+            // process the login form
+            app.post('/login', passport.authenticate('local-login', {
+              // successRedirect : '/feed', // redirect to the secure profile section
+              failureRedirect : '/login', // redirect back to the signup page if there is an error
+              failureFlash : true // allow flash messages
+            }), (req, res) => {// request to update inforamtion on the page
+              console.log(req.user);
+              // req.user.local.profiletype = req.body.profiletype
+              // req.user.local.username = req.body.username
 
-        // route middleware to ensure user is logged in
-        function isLoggedIn(req, res, next) {// 3 params function with condiitonal
-          if (req.isAuthenticated())
-          return next();
+              if(req.user.local.profiletype == "coach"){
+                res.redirect("/coachprofile")
+              }else{
+                res.redirect("/athleteprofile")
+              }
 
-          res.redirect('/');
-        }
+            });
+
+            // SIGNUP =================================
+            // show the signup form
+            app.get('/signup', function(req, res) {
+              res.render('signup.ejs', { message: req.flash('signupMessage') });
+            });
+
+
+
+            app.post('/signup', upload.single('imagepath'), passport.authenticate('local-signup', {
+              // successRedirect : '/feed', // redirect to the secure profile section
+              failureRedirect : '/signup', // redirect back to the signup page if there is an error
+              failureFlash : true // allow flash messages
+            }),  (req, res) => {// request to update inforamtion on the page
+              console.log(req.body);
+
+              req.user.local.profiletype = req.body.profiletype
+              req.user.local.username = req.body.username
+              req.user.local.firstname = req.body.firstname
+              req.user.local.lastname = req.body.lastname
+              req.user.local.imagepath = 'images/uploads/' + req.file.filename
+              console.log(req.user.local)
+              req.user.save()
+              if(req.body.profiletype == "coach"){
+                res.redirect("/coachprofile")
+              }else{
+                res.redirect("/athleteprofile")
+              }
+
+            });
+
+            // =============================================================================
+            // UNLINK ACCOUNTS =============================================================
+            // =============================================================================
+            // used to unlink accounts. for social accounts, just remove the token
+            // for local account, remove email and password
+            // user account will stay active in case they want to reconnect in the future
+
+            // local -----------------------------------
+            app.get('/unlink/local', isLoggedIn, function(req, res) {
+              var user            = req.user;
+              user.local.email    = undefined;
+              user.local.password = undefined;
+              user.save(function(err) {
+                res.redirect('/feed');
+              });
+            });
+
+          };
+
+          // route middleware to ensure user is logged in
+          function isLoggedIn(req, res, next) {// 3 params function with condiitonal
+            if (req.isAuthenticated())
+            return next();
+
+            res.redirect('/');
+          }

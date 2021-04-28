@@ -65,13 +65,15 @@
           <p>Connection requests section</p>
 
           <ul>
-              <% for(var i=0; i< connectionRequests.length; i++) { %>
+              <% for(var i=0; i< user.connectedUsers.length; i++) { %>
 
 
 
-                <li data-id='<%= connectionRequests[i]._id %>'>
+                <li data-id='<%= user.connectedUsers[i] %>'>
 
-                  <span>You have a connection request pending <%= connectionRequests[i].athleteUN %></span>
+                  <% if(user.connectedUsers[i] == user._id)%>
+
+                  <span>You have a connection request pending from <%= user.connectedUsers[i] %></span>
 
 
                   <button class="acceptConnection" type="button" name="button">Accept</button><button class="declineConnection" type="button" name="button">Decline</button>
@@ -86,24 +88,24 @@
 
         <form action="/coach" method="post">
           <p class="filterCats">Division</p>
-            <input type="checkbox" name="division" value="Bikini">
+            <input type="checkbox" name="division" value="Bikini" <%= user.local.coachInfo.division.includes("Bikini") ? "checked": "" %>>
             <label for="division">Bikini</label>
 
-            <input type="checkbox" name="division" value="Wellness">
+            <input type="checkbox" name="division" value="Wellness" <%= user.local.coachInfo.division.includes("Wellness") ? "checked": "" %>>
             <label for="division">Wellness</label>
 
 
-            <input type="checkbox" name="division" value="Figure">
+            <input type="checkbox" name="division" value="Figure" <%= user.local.coachInfo.division.includes("Figure") ? "checked": "" %>>
             <label for="division">Figure</label>
 
 
-            <input type="checkbox" name="division" value="Fitness" <%= user.local.coachInfo.division.includes("Fitness") ? "checked": "x" %>>
+            <input type="checkbox" name="division" value="Fitness" <%= user.local.coachInfo.division.includes("Fitness") ? "checked": "" %>>
             <label for="division">Fitness</label>
 
-            <input type="checkbox" name="division" value="WPD">
+            <input type="checkbox" name="division" value="WPD" <%= user.local.coachInfo.division.includes("WPD") ? "checked": "" %>>
             <label for="division">Women's Physique Division</label>
 
-            <input type="checkbox" name="division" value="WBB">
+            <input type="checkbox" name="division" value="WBB" <%= user.local.coachInfo.division.includes("WBB") ? "checked": "" %>>
             <label for="division">Women's Bodybuilding</label>
 
           <p class="filterCats">Coach Gender</p>

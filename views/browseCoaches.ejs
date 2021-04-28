@@ -90,12 +90,10 @@
 
 
             <% if(user){
-              if(user.local.profiletype == "athlete"){%>
+              if(user.local.profiletype == "athlete" ){%>
                 <form class="" action="/connectionRequest" method="post">
                   <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
                   <button type="submit" name="button">Request to connect with <%= coaches[i].local.username %></button>
-
-
 
                 </form>
 
@@ -109,7 +107,8 @@
           </ul>
 
 
-          
+
+
 
 
 
