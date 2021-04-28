@@ -16,9 +16,17 @@
       <ul>
         <li><a class="navLinks" href="/">Home</a></li>
         <li><a class="navLinks" href="/browsecoaches">Browse Coaches</a></li>
+        <%if(user) {
+          if(user.local.profiletype == "athlete") {%>
+        <li><a class="navLinks" href="/athleteprofile">Profile</a></li>
+        <% } else { %>
+          <li><a class="navLinks" href="/coachprofile">Profile</a></li>
+        <%}} else {%>
+        <li><a class="navLinks" href="/login">Profile</a></li>
+        <% } %>
         <li><a class="navLinks" href="/signup">Sign Up</a></li>
         <li><a class="navLinks" href="/login">Log In</a></li>
-        <li><a class="navLinks" href="/">Log Out</a></li>
+        <li><a class="navLinks" href="/logout">Log Out</a></li>
       </ul>
     </nav>
   </header>
@@ -85,18 +93,15 @@
       <% for(var i=0; i<coaches.length; i++) {%>
         <li class="coaches">
           <p class="coachName"><%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></p class="coachName">
-
             <a href="mailto:<%=coaches[i].local.email%>">📧 <%= coaches[i].local.email %></a>
-
-
             <% if(user){
-              if(user.local.profiletype == "athlete" ){%>
+              if(user.local.profiletype == "athlete"){%>
+
+
                 <form class="" action="/connectionRequest" method="post">
                   <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
                   <button type="submit" name="button">Request to connect with <%= coaches[i].local.username %></button>
-
                 </form>
-
                 <% }
               } %>
               <img src="<%=coaches[i].local.imagepath%>" alt="">
@@ -105,7 +110,6 @@
 
 
           </ul>
-
 
 
 

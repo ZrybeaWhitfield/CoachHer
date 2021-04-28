@@ -15,10 +15,11 @@
     <nav>
       <ul>
         <li><a class="navLinks" href="/">Home</a></li>
+        <li><a class="navLinks" href="/coachprofile">Profile</a></li>
         <li><a class="navLinks" href="/browsecoaches">Browse Coaches</a></li>
         <li><a class="navLinks" href="/signup">Sign Up</a></li>
         <li><a class="navLinks" href="/login">Log In</a></li>
-        <li><a class="navLinks" href="/">Log Out</a></li>
+        <li><a class="navLinks" href="/logout">Log Out</a></li>
       </ul>
     </nav>
   </header>
@@ -38,7 +39,6 @@
             <% for(var i=0; i< chatRequests.length; i++) {
               console.log(chatRequests[i])
               if(chatRequests[i].status !== "Declined"){ %>
-
               <li data-id='<%= chatRequests[i]._id %>'>
                 <% if(chatRequests[i].status == "Approved"){ %>
                 <span>Chat with <%= chatRequests[i].athleteUN %></span>
@@ -46,12 +46,7 @@
                 <% } else { %>
                 <span>You have a chat request pending</span>
                 <button class="acceptChat" type="button" name="button">Accept</button><button class="declineChat" type="button" name="button">Decline</button>
-
                 <% } %>
-
-
-
-
                   <!-- use  array find to search through the request arrays with any of the coaches-->
                 </form>
               </li>
@@ -65,21 +60,11 @@
           <p>Connection requests section</p>
 
           <ul>
-              <% for(var i=0; i< user.connectedUsers.length; i++) { %>
-
-
-
-                <li data-id='<%= user.connectedUsers[i] %>'>
-
-                  <% if(user.connectedUsers[i] == user._id)%>
-
-                  <span>You have a connection request pending from <%= user.connectedUsers[i] %></span>
-
-
+              <% for(var i=0; i< connectionRequests.length; i++) { %>
+                <li data-id='<%= connectionRequests[i]._id %>'>
+                  <span>You have a connection request pending <%= connectionRequests[i].athleteUN %></span>
                   <button class="acceptConnection" type="button" name="button">Accept</button><button class="declineConnection" type="button" name="button">Decline</button>
-
                 </li>
-
               <% } %>
               </ul>
         </section>
@@ -88,24 +73,24 @@
 
         <form action="/coach" method="post">
           <p class="filterCats">Division</p>
-            <input type="checkbox" name="division" value="Bikini" <%= user.local.coachInfo.division.includes("Bikini") ? "checked": "" %>>
+            <input type="checkbox" name="division" value="Bikini">
             <label for="division">Bikini</label>
 
-            <input type="checkbox" name="division" value="Wellness" <%= user.local.coachInfo.division.includes("Wellness") ? "checked": "" %>>
+            <input type="checkbox" name="division" value="Wellness">
             <label for="division">Wellness</label>
 
 
-            <input type="checkbox" name="division" value="Figure" <%= user.local.coachInfo.division.includes("Figure") ? "checked": "" %>>
+            <input type="checkbox" name="division" value="Figure">
             <label for="division">Figure</label>
 
 
-            <input type="checkbox" name="division" value="Fitness" <%= user.local.coachInfo.division.includes("Fitness") ? "checked": "" %>>
+            <input type="checkbox" name="division" value="Fitness">
             <label for="division">Fitness</label>
 
-            <input type="checkbox" name="division" value="WPD" <%= user.local.coachInfo.division.includes("WPD") ? "checked": "" %>>
+            <input type="checkbox" name="division" value="WPD">
             <label for="division">Women's Physique Division</label>
 
-            <input type="checkbox" name="division" value="WBB" <%= user.local.coachInfo.division.includes("WBB") ? "checked": "" %>>
+            <input type="checkbox" name="division" value="WBB">
             <label for="division">Women's Bodybuilding</label>
 
           <p class="filterCats">Coach Gender</p>

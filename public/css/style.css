@@ -89,7 +89,7 @@ ul{
   font-size: 1.5rem;
   font-style: italic;
   font-weight: 700;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: repeat(4, 1fr);
   padding-top: 4rem;
   margin-left: 50%;
   width:50%;

@@ -16,9 +16,10 @@
       <ul>
         <li><a class="navLinks" href="/">Home</a></li>
         <li><a class="navLinks" href="/browsecoaches">Browse Coaches</a></li>
+        <li><a class="navLinks" href="/athleteprofile">Profile</a></li>
         <li><a class="navLinks" href="/signup">Sign Up</a></li>
         <li><a class="navLinks" href="/login">Log In</a></li>
-        <li><a class="navLinks" href="/">Log Out</a></li>
+        <li><a class="navLinks" href="/logout">Log Out</a></li>
       </ul>
     </nav>
   </header>
@@ -40,13 +41,13 @@
         </label>
       </section> -->
       <p>Here are the connection requests </p>
-      <!-- <ul>
-        <% console.log("this is connectReqs for AC", connectReqs)
-        for(var i=0; i<connectReqs.length; i++) {%>
-        <span><% connectReqs[i].status %></span>
-        <% } %>
-      </ul> -->
+      <ul>
+        <% console.log("this is connectionRequests for athlete", connectionRequests)
+        for(var i=0; i<connectionRequests.length; i++) {%>
+        <span><%= connectionRequests[i].status %></span>
 
+        <% } %>
+      </ul>
 
       <section>
         <h2>Chat with a Coach</h2>
