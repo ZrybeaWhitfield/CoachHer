@@ -31,8 +31,9 @@
 
     </section>
 
-    <section class="roster">
+    <section class="chatRequests">
       <section>
+        <p>Chat requests section</p>
         <ul>
             <% for(var i=0; i< chatRequests.length; i++) {
               console.log(chatRequests[i])
@@ -44,7 +45,7 @@
                 <a href="/room/<%= chatRequests[i].roomID %>">Join Chat</a>
                 <% } else { %>
                 <span>You have a chat request pending</span>
-                <button class="accept" type="button" name="button">Accept</button><button class="decline" type="button" name="button">Decline</button>
+                <button class="acceptChat" type="button" name="button">Accept</button><button class="declineChat" type="button" name="button">Decline</button>
 
                 <% } %>
 
@@ -58,6 +59,28 @@
             <% } %>
             </ul>
       </section>
+
+      <section class="connectionRequests">
+        <section>
+          <p>Connection requests section</p>
+
+          <ul>
+              <% for(var i=0; i< connectionRequests.length; i++) { %>
+
+
+
+                <li data-id='<%= connectionRequests[i]._id %>'>
+
+                  <span>You have a connection request pending <%= connectionRequests[i].athleteUN %></span>
+
+
+                  <button class="acceptConnection" type="button" name="button">Accept</button><button class="declineConnection" type="button" name="button">Decline</button>
+
+                </li>
+
+              <% } %>
+              </ul>
+        </section>
 
       <section class="filters">
 

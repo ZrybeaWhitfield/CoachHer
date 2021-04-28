@@ -1,85 +1,115 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,500;0,700;1,200;1,300;1,500;1,700&display=swap">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style4.css">
-    <title>CoachHer</title>
-  </head>
-  <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a class="navLinks" href="/">Home</a></li>
-          <li><a class="navLinks" href="/browsecoaches">Browse Coaches</a></li>
-          <li><a class="navLinks" href="/signup">Sign Up</a></li>
-          <li><a class="navLinks" href="/login">Log In</a></li>
-          <li><a class="navLinks" href="/">Log Out</a></li>
-        </ul>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,500;0,700;1,200;1,300;1,500;1,700&display=swap">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style4.css">
+  <title>CoachHer</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a class="navLinks" href="/">Home</a></li>
+        <li><a class="navLinks" href="/browsecoaches">Browse Coaches</a></li>
+        <li><a class="navLinks" href="/signup">Sign Up</a></li>
+        <li><a class="navLinks" href="/login">Log In</a></li>
+        <li><a class="navLinks" href="/">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-      <section class="spacer">
-        <h1>Find a Coach</h1>
+  <main>
+    <section class="spacer">
+      <h1>Find a Coach</h1>
+    </section>
+
+    <!-- Question One -->
+    <section class="filter">
+      <h2>Filter Coaches</h2>
+      <section class="filterSecs">
+        <form class="" action="/browsecoaches" method="post">
+          <p class="filterCats">Division</p>
+          <input type="radio" name="division" value="Bikini">
+          <label for="division">Bikini</label>
+
+          <input type="radio" name="division" value="Wellness">
+          <label for="division">Wellness</label>
+
+
+          <input type="radio" name="division" value="Figure">
+          <label for="division">Figure</label>
+
+
+          <input type="radio" name="division" value="Fitness">
+          <label for="division">Fitness</label>
+
+          <input type="radio" name="division" value="WPD">
+          <label for="division">Women's Physique Division</label>
+
+          <input type="radio" name="division" value="WBB">
+          <label for="division">Women's Bodybuilding</label>
+
+          <button class="submit" type="buttom" name="button">Submit</button>
+
+        </form>
+
+        <form class="" action="index.html" method="post">
+          <p class="filterCats">Coach Gender Preference</p>
+          <input type="radio" name="gender" value="">
+          <label for="gender">Female</label>
+
+          <input type="radio" name="gender" value="">
+          <label for="gender">Male</label>
+
+
+          <input type="radio" name="gender" value="">
+          <label for="gender">None</label>
+
+
+        </form>
+
+        <section class="submit" action="/browsecoaches" method="post">
+
+          <button class="clear" type="button" name="button">Clear</button>
+        </section>
       </section>
 
-      <!-- Question One -->
-        <section class="filter">
-          <h2>Filter Coaches</h2>
-          <section class="filterSecs">
-            <form class="" action="/browsecoaches" method="post">
-              <p class="filterCats">Division</p>
-                <input type="radio" name="division" value="Bikini">
-                <label for="division">Bikini</label>
+    </section>
 
-                <input type="radio" name="division" value="Wellness">
-                <label for="division">Wellness</label>
+    <ul class="coachUL">
+      <% for(var i=0; i<coaches.length; i++) {%>
+        <li class="coaches">
+          <p class="coachName"><%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></p class="coachName">
+
+            <a href="mailto:<%=coaches[i].local.email%>">📧 <%= coaches[i].local.email %></a>
 
 
-                <input type="radio" name="division" value="Figure">
-                <label for="division">Figure</label>
+            <% if(user){
+              if(user.local.profiletype == "athlete"){%>
+                <form class="" action="/connectionRequest" method="post">
+                  <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
+                  <button type="submit" name="button">Request to connect with <%= coaches[i].local.username %></button>
 
 
-                <input type="radio" name="division" value="Fitness">
-                <label for="division">Fitness</label>
 
-                <input type="radio" name="division" value="WPD">
-                <label for="division">Women's Physique Division</label>
+                </form>
 
-                <input type="radio" name="division" value="WBB">
-                <label for="division">Women's Bodybuilding</label>
-
-                <button class="submit" type="buttom" name="button">Submit</button>
-
-            </form>
-
-            <form class="" action="index.html" method="post">
-              <p class="filterCats">Coach Gender Preference</p>
-              <input type="radio" name="gender" value="">
-              <label for="gender">Female</label>
-
-              <input type="radio" name="gender" value="">
-              <label for="gender">Male</label>
+                <% }
+              } %>
+              <img src="<%=coaches[i].local.imagepath%>" alt="">
+            </li>
+            <% } %>
 
 
-              <input type="radio" name="gender" value="">
-              <label for="gender">None</label>
+          </ul>
 
 
-            </form>
-
-            <section class="submit" action="/browsecoaches" method="post">
-
-						<button class="clear" type="button" name="button">Clear</button>
-					</section>
-          </section>
-
-        </section>
+          
 
 
 
@@ -87,22 +117,9 @@
 
 
 
-          <ul class="coachUL">
-              <% for(var i=0; i<coaches.length; i++) {%>
-                <li class="coaches">
-                  <p class="coachName"><%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></p class="coachName">
-
-                  <a href="mailto:<%=coaches[i].local.email%>">📧 <%= coaches[i].local.email %></a>
-
-                  <img src="<%=coaches[i].local.imagepath%>" alt="">
-                </li>
-              <% } %>
-              </ul>
-
-
-    </main>
-    <footer>
-      <p class="copy"> Copyright © 2021 CoachHer.All rights reserved.</p>
-    </footer>
-  </body>
-</html>
+        </main>
+        <footer>
+          <p class="copy"> Copyright © 2021 CoachHer.All rights reserved.</p>
+        </footer>
+      </body>
+      </html>
