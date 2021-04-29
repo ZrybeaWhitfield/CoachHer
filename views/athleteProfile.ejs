@@ -47,23 +47,27 @@
   </section> -->
   <section class="connectionRequests">
     <h2>Connect with a coach</h2>
+
     <ul>
       <% for(var i=0; i<connectionRequests.length; i++) { %>
-        <li><% let currentConReqs = connectionRequests.find( (r) =>  user._id.toString() == r.athleteID.toString())
-          console.log("looking for active reqs", currentConReqs)
-          if(!currentConReqs){%>
+        <li>
+
+          <% if(!connectionRequests[i]){%>
             <a href="/browsecoaches">Find A Coach?</a>
-            <% } else if(currentConReqs.status == "Approved") { %>
+            <% } else if(connectionRequests[i].status === "Approved") { %>
               <span>You are connected with coach </span>
-              <% } else if(currentConReqs.status == "pending"){ %>
+              <% } else if(connectionRequests[i].status === "pending"){ %>
                 <span>Your connection request is pending</span>
                 <% } else { %>
                   <span>coach has declined your request. <a href="/browsecoaches">Find A Coach?</a></span>
+
                   <% } %>
+
                 </li>
                 <% } %>
               </ul>
-              
+
+
             </section>
 
             <section>
@@ -71,7 +75,7 @@
               <ul>
                 <% for(var i=0; i<coaches.length; i++) {%>
                   <li class="" >
-                    <!-- <span><%= coaches[i].local.username %></span> <a href="/chatRequest?coachID=<%= coaches[i]._id %>"><button type="button" name="button">Chat with <%= coaches[i].local.username %></button></a> -->
+
                     <form class="" action="/chatRequest" method="post">
                       <span><%= coaches[i].local.firstname %></span> <span><%= coaches[i].local.lastname %></span>
                       <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">

@@ -25,12 +25,22 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
   app.get('/athleteprofile', isLoggedIn, function(req, res) {
     db.collection('connectionRequest').find({athleteID: ObjectId(req.user._id)}).toArray((err, connectionResults) => {
     db.collection('chatRequest').find({athleteID: ObjectId(req.user._id)}).toArray((err, chatReqResults) => {//go to collection, find specific one, place in array
-      console.log("chat request results", chatReqResults);
       if (err) return console.log(err)// if the response is an err
 
       db.collection('users').find({"local.profiletype" : "coach"}).toArray((err, coachResults) => {
         if (err) return console.log(err)
-        console.log("athlete profile connection results",connectionResults);
+
+      //   for(var i=0; i<coachResults.length; i++) {
+      //   let currentConReqs = connectionResults.find((cr) =>  { return coachResults._id.toString() === cr.coachID.toString()})
+      //   console.log("coach results", currentConReqs);
+      // }
+      //
+        let currentConReqs = coachResults.map( r => connectionResults.find((cr) =>  r._id.toString() == cr.coachID.toString())
+      )
+        console.log("coach results", currentConReqs );
+
+
+
         res.render('athleteProfile.ejs', {
           user : req.user,
           chatRequests : chatReqResults,
