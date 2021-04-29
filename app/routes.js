@@ -66,6 +66,19 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
         })
       })
 
+      // INDIVIDUAL Coach Profile PAGE =========================
+      // app.get('/post/:pubProf', function(req, res) {
+      //     let coachID = ObjectId(req.params.pubProf)
+      //     db.collection('users').find({_id: coachID}).toArray((err, result) => {
+      //       console.log("work for me baby", result);
+      //       if (err) return console.log(err)
+      //       res.render('coachPubProf.ejs', {
+      //         coaches: result
+      //       })
+      //     })
+      // });
+
+//*******Add back into ejs once individual profile views are avaialble 
 
       async function browsecoaches(req, res) {
         const filter = {"local.profiletype" : "coach"}
@@ -119,6 +132,8 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
       //     })
       //   })
       // });
+
+
 
 
 
