@@ -47,69 +47,62 @@
   </section> -->
   <section class="connectionRequests">
     <h2>Connect with a coach</h2>
+    <h4>Want to connect with a coach? Start <a href="/browsecoaches">here!</a> </h4>
 
     <ul>
-      <% for(var i=0; i<connectionRequests.length; i++) { %>
+      <% for(var i=0; i<coaches.length; i++) { %>
         <li>
-          <% if(!connectionRequests[i]){%>
-            <a href="/browsecoaches">Find A Coach?</a>
-            <% } else if(connectionRequests[i].status === "Approved") { %>
-              <%console.log("you can do this", connectionRequests[i])%>
-              <span>You are connected with coach </span>
-              <section>
-                <h2>Chat with a Coach</h2>
-                <ul>
-                  <% for(var i=0; i<coaches.length; i++) {%>
-                    <li class="" >
+          <% let request = connectionRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
+          console.log("looking for request for this coach", coaches[i]._id, request  ) %>
 
-                      <form class="" action="/chatRequest" method="post">
-                        <span><%= coaches[i].local.firstname %></span> <span><%= coaches[i].local.lastname %></span>
-                        <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
-                        <% let request = chatRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
-                        console.log("looking for request for this coach", coaches[i]._id, request  )
-                        if(!request ){ %>
-                          <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
-                          <% } else if(request.status == "Approved") { %>
-                            <a href="/room/<%= request.roomID %>">Chat with Coach <%=coaches[i].local.firstname %>  <%=coaches[i].local.lastname %></a>
-                            <% } else if(request.status == "pending"){ %>
-                              <span>Your chat request is pending</span>
-
-                              <% } else { %>
-                                <span>Coach has declined Your Request</span>
-                                <% } %>
-
-                              </form>
-
-                            </li>
-                            <% } %>
-                          </ul>
-
-                        </section>
-                      </section>
-
-                    <% } else if(connectionRequests[i].status === "pending"){ %>
-                      <span>Your connection request is pending</span>
-                      <% } else { %>
-                        <span>coach has declined your request. <a href="/browsecoaches">Find A Coach?</a></span>
-
-                        <% } %>
-
-                      </li>
-                      <% } %>
-                    </ul>
+          <% if(!request ){
+            console.log("hey")
 
 
-                  </section>
+          } else if(request.status == "Approved") { %>
+            <span>You are connected with coach <%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></span>
+
+            <form class="" action="/chatRequest" method="post">
+              <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
+              <% let request = chatRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
+                      console.log("looking for request for this coach", coaches[i]._id, request  )
+                     if(!request ){ %>
+              <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
+          <% } else if(request.status == "Approved") { %>
+          <a href="/room/<%= request.roomID %>">Chat with Coach <%=coaches[i].local.firstname %>  <%=coaches[i].local.lastname %></a>
+          <% } else if(request.status == "pending"){ %>
+          <span>Your chat request is pending</span>
+
+            <% } else { %>
+            <span>Coach has declined Your Request</span>
+        <% } %>
+
+            </form>
+
+          <% } else if(request.status == "Declined"){
+              continue;
+
+          } else { %>
+            <span>Your connection request is pending</span>
+          <% } %>
+
+          </li>
+          <% } %>
+        </ul>
 
 
-                  <!-- Browse coaches section -->
+          </section>
+        </section>
 
 
-                </main>
+        <!-- Browse coaches section -->
 
-                <footer>
-                  <p class="copy"> Copyright © 2021 CoachHer.All rights reserved.</p>
-                </footer>
-                <script src="js/main.js"></script>
-              </body>
-              </html>
+
+      </main>
+
+      <footer>
+        <p class="copy"> Copyright © 2021 CoachHer.All rights reserved.</p>
+      </footer>
+      <script src="js/main.js"></script>
+    </body>
+    </html>

@@ -55,6 +55,13 @@ html{
   font-family: 'Josefin Sans', sans-serif;
 }
 
+img{
+  border-radius: 50%;
+  display: block;
+  height: 25rem;
+  width: 25rem;
+  margin: 0 auto;
+}
 /******************************************
 /* LAYOUT
 /*******************************************/
@@ -90,7 +97,6 @@ nav ul{
   width:50%;
 }
 
-
 footer {
   background: rgb(234,227,245);
   border-top: .2rem solid rgb(37,26,53);
@@ -101,29 +107,47 @@ footer {
   margin-top: .5rem;
 }
 /******************************************
-/* ADDITIONAL STYLES Log In Section
+/* ADDITIONAL STYLES Profile
 /*******************************************/
-h2{
+h1 {
   font-size: 4rem;
+  font-style: italic;
+  font-weight: 700;
+  margin: 4rem;
+  text-align: center;
+}
+
+h2{
+  font-size: 2rem;
   font-weight: 500;
   font-style: italic;
   margin-top: 10%;
   text-align: center;
 }
 
-/******************************************
-/* ADDITIONAL STYLES Intro Section
-/*******************************************/
-h1 {
-  font-size: 3rem;
-  margin: 4rem;
-  text-align: center;
+h3{
+font-size: 2.5rem;
+padding: 1rem 0 4rem 0;
+text-align: center;
 }
+/******************************************
+/* ADDITIONAL STYLES Details
+/*******************************************/
 
 
-.roster {
-  background: rgb(97,56,185);
+.profileDisplay {
+  background: rgb(219,144,234);
   border-left:.2rem solid rgb(37,26,53);
   color: white;
   min-height: 100vh;
+}
+
+/******************************************
+/* ADDITIONAL STYLES Connenction Requests
+/*******************************************/
+.connectionRequests, .filters{
+  background: rgba(234,227,245, .6);
+  color: rgb(37,26,53);
+  margin: 4rem auto;
+  width: 80%;
 }

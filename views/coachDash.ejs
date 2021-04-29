@@ -26,34 +26,20 @@
   <main>
     <!-- profile pic goes here -->
     <section class="profilePic">
-      <h1>Hello <%= user.local.firstname%>'s Dashboard</h1>
+      <h1>Hello <%= user.local.firstname%></h1>
       <img src="<%= user.local.imagepath %>" alt="">
+      <section>
+        <a href="<%= user.local.coachInfo.website %>"><%= user.local.coachInfo.website %></a>
+        <a href="<%= user.local.coachInfo.instagram %>">Instagram</a>
+        <a href="<%= user.local.coachInfo.facebook %>">Facebook</a>
+      </section>
 
 
     </section>
 
-    <section class="chatRequests">
-      <section>
-        <p>Chat requests section</p>
-        <ul>
-            <% for(var i=0; i< chatRequests.length; i++) {
-              console.log(chatRequests[i])
-              if(chatRequests[i].status !== "Declined"){ %>
-              <li data-id='<%= chatRequests[i]._id %>'>
-                <% if(chatRequests[i].status == "Approved"){ %>
-                <span>Chat with <%= chatRequests[i].athleteUN %></span>
-                <a href="/room/<%= chatRequests[i].roomID %>">Join Chat</a>
-                <% } else { %>
-                <span>You have a chat request pending</span>
-                <button class="acceptChat" type="button" name="button">Accept</button><button class="declineChat" type="button" name="button">Decline</button>
-                <% } %>
-                  <!-- use  array find to search through the request arrays with any of the coaches-->
-                </form>
-              </li>
-              <% } %>
-            <% } %>
-            </ul>
-      </section>
+    <section class="profileDisplay">
+
+      <!-- Requests Display -->
 
       <section class="connectionRequests">
         <section>
@@ -62,79 +48,106 @@
           <ul>
               <% for(var i=0; i< connectionRequests.length; i++) { %>
                 <li data-id='<%= connectionRequests[i]._id %>'>
-                  <span>You have a connection request pending <%= connectionRequests[i].athleteUN %></span>
+                  <span><%= connectionRequests[i].athleteUN %> Would like to connect!</span>
+                  
                   <button class="acceptConnection" type="button" name="button">Accept</button><button class="declineConnection" type="button" name="button">Decline</button>
                 </li>
               <% } %>
               </ul>
         </section>
 
-      <section class="filters">
-
-        <form action="/coach" method="post">
-          <p class="filterCats">Divisions</p>
-          <section>
-            <input type="checkbox" name="division" value="Bikini" <%= user.local.coachInfo.division.includes("Bikini") ? "checked": "x" %>>
-            <label for="division">Bikini</label>
-
-            <input type="checkbox" name="division" value="Wellness" <%= user.local.coachInfo.division.includes("Wellness") ? "checked": "" %>>
-            <label for="division">Wellness</label>
-
-
-            <input type="checkbox" name="division" value="Figure" <%= user.local.coachInfo.division.includes("Figure") ? "checked": "" %>>
-            <label for="division">Figure</label>
-
-
-            <input type="checkbox" name="division" value="Fitness" <%= user.local.coachInfo.division.includes("Fitness") ? "checked": "" %>>
-            <label for="division">Fitness</label>
-
-            <input type="checkbox" name="division" value="WPD" <%= user.local.coachInfo.division.includes("WPD") ? "checked": "" %>>
-            <label for="division">Women's Physique Division</label>
-
-            <input type="checkbox" name="division" value="WBB" <%= user.local.coachInfo.division.includes("WBB") ? "checked": "" %>>
-            <label for="division">Women's Bodybuilding</label>
-          </section>
-
-
-          <p class="filterCats">Gender</p>
-          <section>
-            <input type="radio" name="gender" value="Female" >
-            <label for="division">Female</label>
-
-            <input type="radio" name="gender" value="Male" >
-            <label for="division">Male</label>
-
-          </section>
-
-          <p class="filterCats">External Links</p>
-          <section>
-            <input type="text" placeholder="Website" name="website" value="" <%= user.local.coachInfo.website ? user.local.coachInfo.website : "" %>website>
-            <input type="text" placeholder="Instagram" name="instagram" value="" <%= user.local.coachInfo.instagram ? user.local.coachInfo.instagram : "" %>website>
-            <input type="text" placeholder="Facebook" name="facebook" value="" <%= user.local.coachInfo.facebook ? user.local.coachInfo.facebook : "" %>website>
-          </section>
-
-          <section>
-            <label for="about">About</label>
-            <textarea name="about" rows="8" placeholder="About Me" cols="80"><%= user.local.coachInfo.about ? user.local.coachInfo.about : "" %></textarea>
-          </section>
-
-          <section>
-            <p>Credentials</p>
-            <label for="experience">Years of Experience</label>
-            <input name="experience" rows="8" placeholder="Enter Number"cols="80"><%= user.local.coachInfo.experience ? user.local.coachInfo.experience : "" %></input>
-
-            <label for="certifications">Certifications</label>
-            <textarea name="certifications" rows="8" placeholder="Certifications"cols="80"><%= user.local.coachInfo.certifications ? user.local.coachInfo.certifications : "" %></textarea>
-          </section>
-
-
-          <button type="submit" class="btn btn-warning btn-lg">Submit</button>
-        </form>
-
-
-      </section>
+        <section>
+          <p>Chat requests section</p>
+          <ul>
+              <% for(var i=0; i< chatRequests.length; i++) {
+                console.log(chatRequests[i])
+                if(chatRequests[i].status !== "Declined"){ %>
+                <li data-id='<%= chatRequests[i]._id %>'>
+                  <% if(chatRequests[i].status == "Approved"){ %>
+                  <span>Chat with <%= chatRequests[i].athleteUN %></span>
+                  <a href="/room/<%= chatRequests[i].roomID %>">Join Chat</a>
+                  <% } else { %>
+                  <span>You have a chat request pending</span>
+                  <button class="acceptChat" type="button" name="button">Accept</button><button class="declineChat" type="button" name="button">Decline</button>
+                  <% } %>
+                    <!-- use  array find to search through the request arrays with any of the coaches-->
+                  </form>
+                </li>
+                <% } %>
+              <% } %>
+              </ul>
+        </section>
     </section>
 
+    <!-- edit details -->
+
+    <section class="filters">
+
+      <form action="/coach" method="post">
+        <p class="filterCats">Divisions</p>
+        <section>
+          <input type="checkbox" name="division" value="Bikini" <%= user.local.coachInfo.division.includes("Bikini") ? "checked": "x" %>>
+          <label for="division">Bikini</label>
+
+          <input type="checkbox" name="division" value="Wellness" <%= user.local.coachInfo.division.includes("Wellness") ? "checked": "" %>>
+          <label for="division">Wellness</label>
+
+
+          <input type="checkbox" name="division" value="Figure" <%= user.local.coachInfo.division.includes("Figure") ? "checked": "" %>>
+          <label for="division">Figure</label>
+
+
+          <input type="checkbox" name="division" value="Fitness" <%= user.local.coachInfo.division.includes("Fitness") ? "checked": "" %>>
+          <label for="division">Fitness</label>
+
+          <input type="checkbox" name="division" value="WPD" <%= user.local.coachInfo.division.includes("WPD") ? "checked": "" %>>
+          <label for="division">Women's Physique Division</label>
+
+          <input type="checkbox" name="division" value="WBB" <%= user.local.coachInfo.division.includes("WBB") ? "checked": "" %>>
+          <label for="division">Women's Bodybuilding</label>
+        </section>
+
+
+        <p class="filterCats">Gender</p>
+        <section>
+          <input type="radio" name="gender" value="Female" >
+          <label for="division">Female</label>
+
+          <input type="radio" name="gender" value="Male" >
+          <label for="division">Male</label>
+
+        </section>
+
+        <p class="filterCats">External Links</p>
+        <section>
+          <input type="text" placeholder="Website" name="website" value="" <%= user.local.coachInfo.website ? user.local.coachInfo.website : "" %>website>
+          <input type="text" placeholder="Instagram" name="instagram" value="" <%= user.local.coachInfo.instagram ? user.local.coachInfo.instagram : "" %>website>
+          <input type="text" placeholder="Facebook" name="facebook" value="" <%= user.local.coachInfo.facebook ? user.local.coachInfo.facebook : "" %>website>
+        </section>
+
+        <section>
+          <label for="about">About</label>
+          <textarea name="about" rows="8" placeholder="About Me" cols="80"><%= user.local.coachInfo.about ? user.local.coachInfo.about : "" %></textarea>
+        </section>
+
+        <section>
+          <p>Credentials</p>
+          <label for="experience">Years of Experience</label>
+          <input name="experience" rows="8" placeholder="Enter Number"cols="80"><%= user.local.coachInfo.experience ? user.local.coachInfo.experience : "" %></input>
+
+          <label for="certifications">Certifications</label>
+          <textarea name="certifications" rows="8" placeholder="Certifications"cols="80"><%= user.local.coachInfo.certifications ? user.local.coachInfo.certifications : "" %></textarea>
+        </section>
+
+
+        <button type="submit" class="btn btn-warning btn-lg">Submit</button>
+      </form>
+
+
+    </section>
+
+
+</section>
 
 
   </main>
