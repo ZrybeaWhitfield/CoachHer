@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,500;0,700;1,200;1,300;1,500;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style2.css">
-    <title>CoachHer</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,500;0,700;1,200;1,300;1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style2.css">
+  <title>CoachHer</title>
 </head>
 <body>
   <header>
@@ -26,68 +26,84 @@
   <main>
     <!-- profile pic goes here -->
     <section class="profilePic">
-      <h1><%= user.local.username%>'s Profile</h1>
+      <h1><%= user.local.username%></h1>
+      <h3><%= user.local.firstname%> <%= user.local.lastname%></h3>
 
+      <img src="<%= user.local.imagepath%>" alt="">
 
+      <section>
+
+      </section>
 
     </section>
 
     <section class="profileDisplay">
       <!-- <section>
-        <p>Off/On Season</p>
-        <label class="switch">
-          <input type="checkbox">
-          <span class="slider round"></span>
-        </label>
-      </section> -->
-      <p>Here are the connection requests </p>
-      <ul>
-        <% console.log("this is connectionRequests for athlete", connectionRequests)
-        for(var i=0; i<connectionRequests.length; i++) {%>
-        <span><%= connectionRequests[i].status %></span>
+      <p>Off/On Season</p>
+      <label class="switch">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
+  </section> -->
+  <section class="connectionRequests">
+    <h2>Connect with a coach</h2>
+    <ul>
+      <% for(var i=0; i<connectionRequests.length; i++) { %>
+        <li><% let currentConReqs = connectionRequests.find( (r) =>  user._id.toString() == r.athleteID.toString())
+          console.log("looking for active reqs", currentConReqs)
+          if(!currentConReqs){%>
+            <a href="/browsecoaches">Find A Coach?</a>
+            <% } else if(currentConReqs.status == "Approved") { %>
+              <span>You are connected with coach </span>
+              <% } else if(currentConReqs.status == "pending"){ %>
+                <span>Your connection request is pending</span>
+                <% } else { %>
+                  <span>coach has declined your request. <a href="/browsecoaches">Find A Coach?</a></span>
+                  <% } %>
+                </li>
+                <% } %>
+              </ul>
+              
+            </section>
 
-        <% } %>
-      </ul>
+            <section>
+              <h2>Chat with a Coach</h2>
+              <ul>
+                <% for(var i=0; i<coaches.length; i++) {%>
+                  <li class="" >
+                    <!-- <span><%= coaches[i].local.username %></span> <a href="/chatRequest?coachID=<%= coaches[i]._id %>"><button type="button" name="button">Chat with <%= coaches[i].local.username %></button></a> -->
+                    <form class="" action="/chatRequest" method="post">
+                      <span><%= coaches[i].local.firstname %></span> <span><%= coaches[i].local.lastname %></span>
+                      <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
+                      <% let request = chatRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
+                      console.log("looking for request for this coach", coaches[i]._id, request  )
+                      if(!request ){ %>
+                        <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
+                        <% } else if(request.status == "Approved") { %>
+                          <a href="/room/<%= request.roomID %>">Chat with <%=coaches[i].local.lastname %></a>
+                          <% } else if(request.status == "pending"){ %>
+                            <span>Your chat request is pending</span>
 
-      <section>
-        <h2>Chat with a Coach</h2>
-        <ul>
-            <% for(var i=0; i<coaches.length; i++) {%>
-              <li class="" >
-                <!-- <span><%= coaches[i].local.username %></span> <a href="/chatRequest?coachID=<%= coaches[i]._id %>"><button type="button" name="button">Chat with <%= coaches[i].local.username %></button></a> -->
-                <form class="" action="/chatRequest" method="post">
-                  <span><%= coaches[i].local.firstname %></span> <span><%= coaches[i].local.lastname %></span>
-                  <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
-                  <% let request = chatRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
-                  console.log("looking for request for this coach", coaches[i]._id, request  )
-                  if(!request ){ %>
-                  <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
-                <% } else if(request.status == "Approved") { %>
-                  <a href="/room/<%= request.roomID %>">Chat with <%=coaches[i].local.lastname %></a>
-                <% } else if(request.status == "pending"){ %>
-                  <span>Your chat request is pending</span>
+                            <% } else { %>
+                              <span>Coach has declined Your Request</span>
+                              <% } %>
 
-                  <% } else { %>
-                    <span>Coach has declined Your Request</span>
-                    <% } %>
-                  <!-- manually add in coachID and UserID for room? -->
-                  <!-- use  array find to search through the request arrays with any of the coaches-->
-                </form>
+                            </form>
 
-              </li>
-            <% } %>
-            </ul>
+                          </li>
+                          <% } %>
+                        </ul>
 
-      </section>
-    </section>
-<!-- Browse coaches section -->
+                      </section>
+                    </section>
+                    <!-- Browse coaches section -->
 
 
-  </main>
+                  </main>
 
-  <footer>
-    <p class="copy"> Copyright © 2021 CoachHer.All rights reserved.</p>
-  </footer>
-    <script src="js/main.js"></script>
-</body>
-</html>
+                  <footer>
+                    <p class="copy"> Copyright © 2021 CoachHer.All rights reserved.</p>
+                  </footer>
+                  <script src="js/main.js"></script>
+                </body>
+                </html>

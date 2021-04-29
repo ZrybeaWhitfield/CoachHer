@@ -23,7 +23,9 @@ var userSchema = mongoose.Schema({
           facebook: String,
           about: String,
           gender: String,
-          division: [String]
+          division: [String],
+          experience: String,
+          certifications: String
         }
     },
     facebook         : {

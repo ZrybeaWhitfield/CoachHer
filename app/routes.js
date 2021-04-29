@@ -45,12 +45,12 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
   app.get('/coachprofile', isLoggedIn, function(req, res) {
 
     db.collection('connectionRequest').find({coachID: ObjectId(req.user._id)}).toArray((err, connectionResults) => {
-      console.log("This is connection results", connectionResults);
+
       db.collection('chatRequest').find({coachID: ObjectId(req.user._id)}).toArray((err,
         chatResults) => {//go to collection, find specific one, place in array
 
           if (err) return console.log(err)// if the response is an err
-          console.log();
+
           db.collection('users').find({"local.profiletype" : "coach"}).toArray((err,
             coachResults) => {
 
@@ -154,7 +154,9 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
                 facebook: req.body.facebook,
                 about: req.body.about,
                 gender: req.body.gender,
-                division: req.body.division
+                division: req.body.division,
+                experience: req.body.experience,
+                certifications: req.body.certifications
               }
             }
           }, {"upsert": true}, (err, result) => {// goes into collections and adds the data to these properties
@@ -349,37 +351,7 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
             res.render('signup.ejs', { message: req.flash('signupMessage') });
           });
 
-          // process the signup form
 
-          // app.post('/signup', passport.authenticate('local-signup', {
-          //   // successRedirect : '/feed', // redirect to the secure profile section
-          //   failureRedirect : '/signup', // redirect back to the signup page if there is an error
-          //   failureFlash : true // allow flash messages
-          // }), (req, res) => {// request to update inforamtion on the page
-          //   console.log(req.body);
-          //
-          //   req.user.local.profiletype = req.body.profiletype
-          //   req.user.local.username = req.body.username
-          //   req.user.local.firstname = req.body.firstname
-          //   req.user.local.lastname = req.body.lastname
-          //   //req.file.filename (once you have the image up and running)
-          //   req.user.save()
-          //   if(req.body.profiletype == "coach"){
-          //     res.redirect("/coachprofile")
-          //   }else{
-          //     res.redirect("/athleteprofile")
-          //   }
-          //
-          // }); // this is how I can add properties to user
-
-          // app.post('/profilepic', upload.single('file-to-upload'), (req, res, next) => {
-          //   let uId = ObjectId(req.session.passport.user)
-          //   db.collection('profilePic').save({posterId: uId, imgPath: 'images/uploads/' + req.file.filename}, (err, result) => {
-          //     if (err) return console.log(err)
-          //     console.log('saved to database')
-          //     res.redirect('/athleteprofile')
-          //   })
-          // });
           app.post('/signup', upload.single('imagepath'), passport.authenticate('local-signup', {
             // successRedirect : '/feed', // redirect to the secure profile section
             failureRedirect : '/signup', // redirect back to the signup page if there is an error
