@@ -38,6 +38,7 @@
 
     <!-- Question One -->
     <section class="filter">
+
       <h2>Filter Coaches</h2>
       <section class="filterSecs">
         <form class="" action="/browsecoaches" method="post">
@@ -62,54 +63,66 @@
           <input type="radio" name="division" value="WBB">
           <label for="division">Women's Bodybuilding</label>
 
-          <button class="submit" type="buttom" name="button">Submit</button>
+          <button class="submit" type="buttom" name="button">Filter by Division</button>
 
         </form>
 
-        <form class="" action="index.html" method="post">
+        <form class="" action="/browsecoaches" method="post">
           <p class="filterCats">Coach Gender Preference</p>
-          <input type="radio" name="gender" value="">
+          <input type="radio" name="gender" value="Female">
           <label for="gender">Female</label>
 
-          <input type="radio" name="gender" value="">
+          <input type="radio" name="gender" value="Male">
           <label for="gender">Male</label>
 
 
-          <input type="radio" name="gender" value="">
-          <label for="gender">None</label>
+          <button class="submit" type="buttom" name="button">Filter by Gender</button>
 
 
         </form>
 
+        <form class="" action="/browsecoaches" method="post">
+          <button type="submit" name="button">Clear</button>
+        </form>
+
+
         <section class="submit" action="/browsecoaches" method="post">
 
-          <button class="clear" type="button" name="button">Clear</button>
         </section>
       </section>
 
     </section>
 
-    <ul class="coachUL">
-      <% for(var i=0; i<coaches.length; i++) {%>
-        <li class="coaches">
-          <p class="coachName"><%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></p class="coachName">
+<section class="coachList">
+  <h3>Coaches</h3>
+  <ul class="coachUL">
+    <% for(var i=0; i<coaches.length; i++) {%>
+      <li class="coaches">
+        <img src="<%=coaches[i].local.imagepath%>" alt="">
+        <section>
+          <p class="coachName"><%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></p>
             <a href="mailto:<%=coaches[i].local.email%>">📧 <%= coaches[i].local.email %></a>
-            <% if(user){
-              if(user.local.profiletype == "athlete"){%>
+
+        </section>
+
+          <% if(user){
+            if(user.local.profiletype == "athlete"){%>
 
 
-                <form class="" action="/connectionRequest" method="post">
-                  <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
-                  <button type="submit" name="button">Request to connect with <%= coaches[i].local.username %></button>
-                </form>
-                <% }
-              } %>
-              <img src="<%=coaches[i].local.imagepath%>" alt="">
-            </li>
-            <% } %>
+              <form class="" action="/connectionRequest" method="post">
+                <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
+                <button type="submit" name="button">Request to connect with <%= coaches[i].local.username %></button>
+              </form>
+              <% }
+            } %>
+
+          </li>
+          <% } %>
 
 
-          </ul>
+        </ul>
+
+</section>
 
 
 

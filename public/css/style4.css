@@ -1,3 +1,4 @@
+
 /*
 Project Name: CoachHer
 Author: Zrybea Whitfield
@@ -104,16 +105,19 @@ footer {
 /******************************************
 /* ADDITIONAL STYLES Log In Section
 /*******************************************/
-h1{
-  background: rgba(234,227,245, .6);
+h1, h3{
   font-size: 5rem;
   font-weight: 700;
   font-style: italic;
+  padding-top: 5rem;
+  text-align: center;
+}
+
+h1{
+  background: rgba(234,227,245, .6);
   height: 20rem;
   margin: 25rem auto;
-  padding-top: 8rem;
   position: absolute;
-  text-align: center;
   width: 100%;
 }
 
@@ -121,6 +125,7 @@ h2 {
   font-size: 2rem;
   margin: 4rem 2rem;
 }
+
 
 label{
   font-size: 1.2rem;
@@ -146,28 +151,57 @@ label{
   margin-top: 5rem;
 } */
 
+img{
+  border-radius: 50%;
+  display: block;
+  height: 15rem;
+  margin: 4rem auto;
+  text-align: center;
+  width: 15rem;
+}
 
-.coachUL{
+.coachList{
   background:rgb(219,144,234);
   margin-top: 5rem;
   min-height: 100vh;
 }
 
+.backToTop{
+  bottom: 1rem;
+  font-size: 6rem;
+  height: 10rem;
+  /* display: none; */
+  position: fixed;
+  right: 1rem;
+}
+/*  */
+
+/* color rgb(234,227,245) - lilac
+        rgb(97,56,185) - purple
+        rgb(219,144,234) - pink
+        rgb(37,26,53) - plum
+        */
+
 .coaches{
   background: rgb(234,227,245);
   border-top: 4rem solid rgb(97,56,185);
-  height: 25rem;
+  box-shadow: 1rem 1rem 1rem rgba(97,56,185, .4);
+  display: grid;
+  grid-template-columns: 30% 70%;
+  height: 40rem;
   margin: 2rem auto 0 auto;
   width: 50%;
 }
 
 .coaches a{
-  font-size: 3rem;
+  font-size: 2rem;
   padding: 1rem;
   text-decoration: none;
 }
 
 .coachName{
-  font-size: 4rem;
-  padding: 2rem;
+  color: rgb(97,56,185);
+  font-size: 4.5rem;
+  font-weight: 700;
+  padding: 5rem 2rem;
 }

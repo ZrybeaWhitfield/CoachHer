@@ -30,16 +30,6 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
       db.collection('users').find({"local.profiletype" : "coach"}).toArray((err, coachResults) => {
         if (err) return console.log(err)
 
-      //   for(var i=0; i<coachResults.length; i++) {
-      //   let currentConReqs = connectionResults.find((cr) =>  { return coachResults._id.toString() === cr.coachID.toString()})
-      //   console.log("coach results", currentConReqs);
-      // }
-      //
-        let currentConReqs = coachResults.map( r => connectionResults.find((cr) =>  r._id.toString() == cr.coachID.toString())
-      )
-        console.log("coach results", currentConReqs );
-
-
 
         res.render('athleteProfile.ejs', {
           user : req.user,
@@ -84,9 +74,14 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
 
             "$in": [req.body.division]
           }
+        }else if(req.body.gender){
+          filter["local.coachInfo.gender"] = {
+
+            "$in": [req.body.gender]
+          }
         }
 
-        console.log("This is the browse coaches filter", filter, req.body);
+        console.log("This is the  filter", filter, req.body);
 
         const coachResults = await db.collection('users').find(filter).toArray()
         let connectionResults = []
