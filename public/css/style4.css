@@ -166,15 +166,6 @@ img{
   min-height: 100vh;
 }
 
-.backToTop{
-  bottom: 1rem;
-  font-size: 6rem;
-  height: 10rem;
-  /* display: none; */
-  position: fixed;
-  right: 1rem;
-}
-/*  */
 
 /* color rgb(234,227,245) - lilac
         rgb(97,56,185) - purple

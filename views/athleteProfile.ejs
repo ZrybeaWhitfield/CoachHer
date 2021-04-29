@@ -70,7 +70,7 @@
                         if(!request ){ %>
                           <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
                           <% } else if(request.status == "Approved") { %>
-                            <a href="/room/<%= request.roomID %>">Chat with <%=coaches[i].local.lastname %></a>
+                            <a href="/room/<%= request.roomID %>">Chat with Coach <%=coaches[i].local.firstname %>  <%=coaches[i].local.lastname %></a>
                             <% } else if(request.status == "pending"){ %>
                               <span>Your chat request is pending</span>
 
@@ -103,7 +103,7 @@
 
 
                   <!-- Browse coaches section -->
-                  
+
 
                 </main>
 
