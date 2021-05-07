@@ -78,7 +78,7 @@ module.exports = function(app, passport, db, multer) { // allow us to render the
       //     })
       // });
 
-//*******Add back into ejs once individual profile views are avaialble 
+//*******Add back into ejs once individual profile views are
 
       async function browsecoaches(req, res) {
         const filter = {"local.profiletype" : "coach"}
