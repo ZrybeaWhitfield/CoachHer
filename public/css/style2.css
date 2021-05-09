@@ -176,19 +176,49 @@ text-align: center;
   width: 80%;
 }
 
-.conReqStatus {
+.conReqStatus{
   color: rgb(255,255,255);
   font-size:2rem;
   display: block;
   padding: 2rem 3rem;
 }
 
+.chatReqStatus{
+  color: rgb(255,255,255);
+  font-weight: 300;
+}
+
+.chatLink{
+  color: rgb(197,84, 155);
+  display: block;
+}
+
+.chatLink:hover{
+  color: rgb(97,56,185);
+}
 .status{
   color: rgb(197,84,155);
   animation: pulse 4s infinite;
 }
 @keyframes pulse {
   50% {color: rgb(97,56,185);}
+}
+
+.chatReqForm{
+  text-align: center;
+}
+
+.chatReqButton{
+  background: transparent;
+  border: 1px solid rgb(197, 84,155);
+  border-radius: 2rem;
+  color: rgb(197, 84,155);
+  padding: 1rem;
+}
+
+.chatReqButton:hover{
+  color: rgb(255,255,255);
+  background: rgb(197, 84,155);
 }
 /******************************************
 /* ADDITIONAL STYLES slider

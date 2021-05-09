@@ -46,26 +46,25 @@
     <ul>
       <% for(var i=0; i<coaches.length; i++) { %>
         <li>
-          <% let request = connectionRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
-          console.log("looking for request for this coach", coaches[i]._id, request  ) %>
+          <% let request = connectionRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())%>
 
           <% if(!request ){
             console.log("hey")
 
 
           } else if(request.status == "Approved") { %>
-            <span class="conReqStatus">You are connected with coach <%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></span>
+            <span class="conReqStatus">You are connected with Coach: <%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %>!</span>
 
-            <form class="" action="/chatRequest" method="post">
+            <form class="chatReqForm" action="/chatRequest" method="post">
               <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
               <% let request = chatRequests.find( (r) =>  coaches[i]._id.toString() == r.coachID.toString())
                       console.log("looking for request for this coach", coaches[i]._id, request  )
                      if(!request ){ %>
-              <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
+              <button class="chatReqButton" type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
           <% } else if(request.status == "Approved") { %>
-          <a class="conReqStatus" href="/room/<%= request.roomID %>">Chat with Coach <%=coaches[i].local.firstname %>  <%=coaches[i].local.lastname %></a>
+          <a class="conReqStatus chatLink" href="/room/<%= request.roomID %>">Chat with Coach <%=coaches[i].local.firstname %>  <%=coaches[i].local.lastname %></a>
           <% } else if(request.status == "pending"){ %>
-          <span>Your chat request is pending</span>
+          <span class="chatReqStatus">Your chat request is <span class="status">Pending</span></span>
 
             <% } else { %>
             <span>Coach has declined Your Request</span>

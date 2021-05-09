@@ -32,6 +32,9 @@
   </header>
 
   <main>
+
+    <!-- <button class="backToTop" type="button" name="button">⬆</button> -->
+
     <section class="spacer">
       <h1>Find a Coach</h1>
     </section>
@@ -81,7 +84,7 @@
 
         </form>
 
-        <form class="" action="/browsecoaches" method="post">
+        <form class="clear" action="/browsecoaches" method="post">
           <button type="submit" name="button">Clear</button>
         </form>
 
@@ -97,7 +100,7 @@
   <h3>Coaches</h3>
   <ul class="coachUL">
     <% for(var i=0; i<coaches.length; i++) {%>
-      <li class="coaches">
+      <li class="coaches borderGrad">
         <img src="<%=coaches[i].local.imagepath%>" alt="">
         <section>
           <p class="coachName"><%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></p>
@@ -112,7 +115,7 @@
 
               <form class="" action="/connectionRequest" method="post">
                 <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
-                <button type="submit" name="button">Request to connect with <%= coaches[i].local.username %></button>
+                <button class="reqButton" type="submit" name="button">Request to connect with <%= coaches[i].local.username %></button>
               </form>
               <% }
             } %>
