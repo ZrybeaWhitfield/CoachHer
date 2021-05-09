@@ -81,7 +81,7 @@ header{
   background: url(../img/cover.png), rgb(234,227,245);
   background-size: contain;
   background-repeat: no-repeat;
-  border-bottom:.2rem solid rgb(37,26,53);
+  border-bottom: .2rem solid rgb(234,234,234);
   height: 10rem;
 }
 

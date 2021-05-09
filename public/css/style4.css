@@ -56,6 +56,19 @@ html{
   font-family: 'Josefin Sans', sans-serif;
 }
 
+a{
+  text-decoration: none;
+}
+button{
+  background: transparent;
+  border: 2px solid rgb(37,26,53);
+  border-radius: 20px;
+  padding: 8px 25px;
+  color: rgb(37,26,53);
+  font: 1.2rem;
+  font-weight: 300;
+  cursor: pointer;
+}
 .spacer{
   background-image: url(../img/competitors2.webp);
   background-size: cover;
@@ -80,7 +93,7 @@ header{
   background: url(../img/cover.png), rgb(234,227,245);
   background-size: contain;
   background-repeat: no-repeat;
-  border-bottom:.2rem solid rgb(37,26,53);
+  border-bottom: .2rem solid rgb(234,234,234);
   height: 10rem;
 }
 
@@ -153,6 +166,7 @@ label{
 
 img{
   border-radius: 50%;
+  box-shadow: 10px 10px 50px rgb(137,137,137);
   display: block;
   height: 15rem;
   margin: 4rem auto;
@@ -195,4 +209,7 @@ img{
   font-size: 4.5rem;
   font-weight: 700;
   padding: 5rem 2rem;
+  background: -webkit-linear-gradient(rgb(97,56,185), rgb(219,144,234));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

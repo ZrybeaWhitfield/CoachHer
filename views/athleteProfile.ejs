@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="30">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,200;0,300;0,500;0,700;1,200;1,300;1,500;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
@@ -27,13 +28,7 @@
     <!-- profile pic goes here -->
     <section class="profilePic">
       <h1>Welcome back, <%= user.local.username%></h1>
-      <h3><%= user.local.firstname%> <%= user.local.lastname%></h3>
-
       <img src="<%= user.local.imagepath%>" alt="">
-
-      <section>
-
-      </section>
 
     </section>
 
@@ -45,10 +40,9 @@
       <span class="slider round"></span>
     </label>
   </section> -->
+  <h2>Connect with a coach</h2>
+  <h3>Want to connect with a coach? Start <a class="here" href="/browsecoaches">here!</a> </h3>
   <section class="connectionRequests">
-    <h2>Connect with a coach</h2>
-    <h4>Want to connect with a coach? Start <a href="/browsecoaches">here!</a> </h4>
-
     <ul>
       <% for(var i=0; i<coaches.length; i++) { %>
         <li>
@@ -60,7 +54,7 @@
 
 
           } else if(request.status == "Approved") { %>
-            <span>You are connected with coach <%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></span>
+            <span class="conReqStatus">You are connected with coach <%= coaches[i].local.firstname %> <%= coaches[i].local.lastname %></span>
 
             <form class="" action="/chatRequest" method="post">
               <input type="hidden" name="coachID" value="<%= coaches[i]._id %>">
@@ -69,7 +63,7 @@
                      if(!request ){ %>
               <button type="submit" name="button">Request to chat with <%= coaches[i].local.username %></button>
           <% } else if(request.status == "Approved") { %>
-          <a href="/room/<%= request.roomID %>">Chat with Coach <%=coaches[i].local.firstname %>  <%=coaches[i].local.lastname %></a>
+          <a class="conReqStatus" href="/room/<%= request.roomID %>">Chat with Coach <%=coaches[i].local.firstname %>  <%=coaches[i].local.lastname %></a>
           <% } else if(request.status == "pending"){ %>
           <span>Your chat request is pending</span>
 
@@ -83,7 +77,7 @@
               continue;
 
           } else { %>
-            <span>Your connection request is pending</span>
+            <span class="conReqStatus">Your connection request is <span class="status">Pending</span></span>
           <% } %>
 
           </li>

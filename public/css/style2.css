@@ -57,15 +57,24 @@ html{
 
 img{
   border-radius: 50%;
+  box-shadow: 10px 10px 50px rgb(137,137,137);
   display: block;
   height: 25rem;
   width: 25rem;
   margin: 0 auto;
 }
+
+a{
+  text-decoration: none;
+}
+a:hover{
+  color: rgb(219,144,234);
+}
 /******************************************
 /* LAYOUT
 /*******************************************/
 main{
+  background: rgb(255,255,255);
   display: grid;
   font-size: 1.5rem;
   grid-template-columns: auto auto;
@@ -82,7 +91,7 @@ header{
   background: url(../img/cover.png), rgb(234,227,245);
   background-size: contain;
   background-repeat: no-repeat;
-  border-bottom:.2rem solid rgb(37,26,53);
+  border-bottom: .2rem solid rgb(234,234,234);
   height: 10rem;
 }
 
@@ -109,20 +118,26 @@ footer {
 /******************************************
 /* ADDITIONAL STYLES Profile
 /*******************************************/
+
 h1 {
+  background: -webkit-linear-gradient(rgb(97,56,185), rgb(219,144,234));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: 4rem;
   font-style: italic;
   font-weight: 700;
+  line-height: 1.2;
   margin: 4rem;
   text-align: center;
 }
 
 h2{
-  font-size: 2rem;
+  font-size: 3.5rem;
   font-weight: 500;
   font-style: italic;
   margin-top: 10%;
   text-align: center;
+  text-shadow: 1px 1px 4px rgb(200,200,200);
 }
 
 h3{
@@ -133,23 +148,47 @@ text-align: center;
 /******************************************
 /* ADDITIONAL STYLES Details
 /*******************************************/
+.profilePic{
 
+  margin: 5rem auto;
+  width: 60%;
+}
 
 .profileDisplay {
-  background: rgb(219,144,234);
-  border-left:.2rem solid rgb(37,26,53);
-  color: white;
+  background: url(../img/background.jpg);
+  background-size: cover;
+  background-position: right;
+  color: rgb(255,255,255);
+  box-shadow: 10px 10px 20px 10px rgb(136,136,136);
   min-height: 100vh;
 }
 
 /******************************************
-/* ADDITIONAL STYLES Connenction Requests
+/* ADDITIONAL STYLES
 /*******************************************/
+
 .connectionRequests{
   background: rgba(234,227,245, .6);
+  box-shadow: 5px 5px 20px 5px rgb(200,130,212);
+  border-radius: 2rem;
   color: rgb(37,26,53);
   margin: 4rem auto;
   width: 80%;
+}
+
+.conReqStatus {
+  color: rgb(255,255,255);
+  font-size:2rem;
+  display: block;
+  padding: 2rem 3rem;
+}
+
+.status{
+  color: rgb(197,84,155);
+  animation: pulse 4s infinite;
+}
+@keyframes pulse {
+  50% {color: rgb(97,56,185);}
 }
 /******************************************
 /* ADDITIONAL STYLES slider
